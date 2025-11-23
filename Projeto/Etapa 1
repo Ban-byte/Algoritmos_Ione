@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    float nota_algoritmos;
+    float nota_design;
+    float nota_modelagem;
+    float nota_frontend;
+
+    printf("=== Calculadora de Estatísticas de Notas ===\n");
+
+    printf("Digite a nota de Algoritmos e Pensamentos Computacionais: ");
+    scanf("%f", &nota_algoritmos);
+
+    printf("Digite a nota de Design Profissional: ");
+    scanf("%f", &nota_design);
+
+    printf("Digite a nota de Modelagem de Banco de Dados: ");
+    scanf("%f", &nota_modelagem);
+
+    printf("Digite a nota de Desenvolvimento Front-End para Web: ");
+    scanf("%f", &nota_frontend);
+
+    printf("\nNotas inseridas:\n");
+    printf("Algoritmos e Pensamentos Computacionais: %.2f\n", nota_algoritmos);
+    printf("Design Profissional: %.2f\n", nota_design);
+    printf("Modelagem de Banco de Dados: %.2f\n", nota_modelagem);
+    printf("Desenvolvimento Front-End para Web: %.2f\n", nota_frontend);
+
+    return 0;
+}
