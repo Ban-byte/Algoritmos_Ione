@@ -1,0 +1,125 @@
+#include <stdio.h>
+
+float calcularMedia(int notas[], int tamanho) {
+    float soma = 0;
+    for (int i = 0; i < tamanho; i++) {
+        if (notas[i] != -1) soma += notas[i];
+    }
+    return soma / tamanho;
+}
+
+int maiorNota(int notas[], int tamanho) {
+    int maior = notas[0];
+    for (int i = 1; i < tamanho; i++) {
+        if (notas[i] > maior) maior = notas[i];
+    }
+    return maior;
+}
+
+int menorNota(int notas[], int tamanho) {
+    int menor = notas[0];
+    for (int i = 1; i < tamanho; i++) {
+        if (notas[i] < menor && notas[i] != -1) menor = notas[i];
+    }
+    return menor;
+}
+
+int main() {
+    int algoritmos[4];
+    int design[4];
+    int modelagem[4];
+    int frontend[4];
+    char next;
+
+    printf("Cadastro de Notas por Bimestre\n");
+
+    for (int b = 0; b < 4; b++) {
+        printf("Deseja inserir notas do %dº bimestre? (s/n): ", b + 1);
+        scanf(" %c", &next);
+
+        if (next == 's' || next == 'S') {
+            printf("-- Notas do %dº bimestre:\n", b + 1);
+
+            printf("Digite a nota de Algoritmos: ");
+            scanf("%d", &algoritmos[b]);
+            if (algoritmos[b] < 0 || algoritmos[b] > 10) algoritmos[b] = -1;
+
+            printf("Digite a nota de Design: ");
+            scanf("%d", &design[b]);
+            if (design[b] < 0 || design[b] > 10) design[b] = -1;
+
+            printf("Digite a nota de Modelagem BD: ");
+            scanf("%d", &modelagem[b]);
+            if (modelagem[b] < 0 || modelagem[b] > 10) modelagem[b] = -1;
+
+            printf("Digite a nota de Front-End: ");
+            scanf("%d", &frontend[b]);
+            if (frontend[b] < 0 || frontend[b] > 10) frontend[b] = -1;
+
+        } else {
+            algoritmos[b] = -1;
+            design[b] = -1;
+            modelagem[b] = -1;
+            frontend[b] = -1;
+            printf("Notas do %dº bimestre não inseridas.\n\n", b + 1);
+        }
+    }
+
+    printf("\n=== Notas Armazenadas ===\n");
+    for (int b = 0; b < 4; b++) {
+        printf("%dº bimestre:\n", b + 1);
+        printf("  Algoritmos: %d\n", algoritmos[b]);
+        printf("  Design: %d\n", design[b]);
+        printf("  Modelagem BD: %d\n", modelagem[b]);
+        printf("  Front-End: %d\n", frontend[b]);
+        printf("\n");
+    }
+
+    int escolha, materia;
+    do {
+        printf("\ Menu Estatístico\n");
+        printf("1 - Média\n");
+        printf("2 - Maior nota\n");
+        printf("3 - Menor nota\n");
+        printf("0 - Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &escolha);
+
+        if (escolha != 0) {
+            printf("Escolha a disciplina:\n");
+            printf("1 - Algoritmos\n");
+            printf("2 - Design\n");
+            printf("3 - Modelagem BD\n");
+            printf("4 - Front-End\n");
+            scanf("%d", &materia);
+        }
+
+        switch (escolha) {
+            case 1:
+                if (materia == 1) printf("Média Algoritmos: %.2f\n", calcularMedia(algoritmos, 4));
+                else if (materia == 2) printf("Média Design: %.2f\n", calcularMedia(design, 4));
+                else if (materia == 3) printf("Média Modelagem BD: %.2f\n", calcularMedia(modelagem, 4));
+                else if (materia == 4) printf("Média Front-End: %.2f\n", calcularMedia(frontend, 4));
+                break;
+            case 2:
+                if (materia == 1) printf("Maior Algoritmos: %d\n", maiorNota(algoritmos, 4));
+                else if (materia == 2) printf("Maior Design: %d\n", maiorNota(design, 4));
+                else if (materia == 3) printf("Maior Modelagem BD: %d\n", maiorNota(modelagem, 4));
+                else if (materia == 4) printf("Maior Front-End: %d\n", maiorNota(frontend, 4));
+                break;
+            case 3:
+                if (materia == 1) printf("Menor Algoritmos: %d\n", menorNota(algoritmos, 4));
+                else if (materia == 2) printf("Menor Design: %d\n", menorNota(design, 4));
+                else if (materia == 3) printf("Menor Modelagem BD: %d\n", menorNota(modelagem, 4));
+                else if (materia == 4) printf("Menor Front-End: %d\n", menorNota(frontend, 4));
+                break;
+            case 0:
+                printf("Encerrando...\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while (escolha != 0);
+
+    return 0;
+}
