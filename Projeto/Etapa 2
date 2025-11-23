@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+int main() {
+    int nota_algoritmos;
+
+    int nota_design;
+
+    int nota_modelagem;
+
+    int nota_frontend;
+
+
+    printf("=== Calculadora de Estatísticas de Notas ===\n");
+
+    printf("Digite a nota de Algoritmos e Pensamentos Computacionais: ");
+    scanf("%d", &nota_algoritmos);
+
+    printf("Digite a nota de Design Profissional: ");
+    scanf("%d", &nota_design);
+
+    printf("Digite a nota de Modelagem de Banco de Dados: ");
+    scanf("%d", &nota_modelagem);
+
+    printf("Digite a nota de Desenvolvimento Front-End para Web: ");
+    scanf("%d", &nota_frontend);
+
+    if (nota_algoritmos < 0 || nota_algoritmos > 10) {
+        printf("Este valor não e valido\n");
+    }
+    else {
+        printf("Algoritmos e Pensamentos Computacionais: %.d\n", nota_algoritmos);
+    }
+
+    if (nota_design < 0 || nota_design > 10) {
+        printf("Este valor não e valido\n");
+    }
+    else {
+        printf("Design Profissional: %.d\n", nota_design);
+    }
+
+    if (nota_modelagem < 0 || nota_modelagem > 10) {
+        printf("Este valor não e valido\n");
+    }
+    else {
+        printf("Modelagem de banco de dados: %.d\n", nota_modelagem);
+    }
+
+    if (nota_frontend < 0 || nota_frontend > 10) {
+        printf("Este valor não e valido\n");
+    }
+    else {
+        printf("Desenvolvimento frontend para web: %.d\n", nota_frontend);
+    }
+    return 0;
+}
