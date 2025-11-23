@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+int main() {
+    int algoritmos[4];
+    int design[4];
+    int modelagem[4];
+    int frontend[4];
+    char next;
+
+    printf("Cadastro de Notas por Bimestre\n");
+    
+    for (int b = 0; b < 4; b++) {
+        printf("Deseja inserir notas do %dº bimestre? (s/n): ", b + 1);
+        scanf(" %c", &next);
+
+        if (next == 's' || next == 'S') {
+            printf("-- Notas do %dº bimestre:\n", b + 1);
+
+            printf("Digite a nota de Algoritmos: ");
+            scanf("%d", &algoritmos[b]);
+            if (algoritmos[b] < 0 || algoritmos[b] > 10) {
+                printf("Nota inválida!\n");
+                algoritmos[b] = -1;
+            }
+
+            printf("Digite a nota de Design: ");
+            scanf("%d", &design[b]);
+            if (design[b] < 0 || design[b] > 10) {
+                printf("Nota inválida!\n");
+                design[b] = -1;
+            }
+
+            printf("Digite a nota de Modelagem BD: ");
+            scanf("%d", &modelagem[b]);
+            if (modelagem[b] < 0 || modelagem[b] > 10) {
+                printf("Nota inválida!\n");
+                modelagem[b] = -1;
+            }
+
+            printf("Digite a nota de Front-End: ");
+            scanf("%d", &frontend[b]);
+            if (frontend[b] < 0 || frontend[b] > 10) {
+                printf("Nota inválida!\n");
+                frontend[b] = -1;
+            }
+
+        } else {
+            algoritmos[b] = -1;
+            design[b] = -1;
+            modelagem[b] = -1;
+            frontend[b] = -1;
+            printf("Notas do %dº bimestre não inseridas.\n\n", b + 1);
+        }
+    }
+
+    printf("\nNotas Armazenadas\n");
+    for (int b = 0; b < 4; b++) {
+        printf("%dº bimestre:\n", b + 1);
+        printf("  Algoritmos: %d\n", algoritmos[b]);
+        printf("  Design: %d\n", design[b]);
+        printf("  Modelagem BD: %d\n", modelagem[b]);
+        printf("  Front-End: %d\n", frontend[b]);
+        printf("\n");
+    }
+
+    return 0;
+}
