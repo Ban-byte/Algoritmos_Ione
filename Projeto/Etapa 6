@@ -1,0 +1,229 @@
+#include <stdio.h>
+
+#define BIMESTRES 4
+
+/* 
+  Programa: Calculadora de Estatísticas de Notas
+  - Permite cadastrar até 4 bimestres para 4 disciplinas
+  - Usa float para as notas (0.0 a 10.0)
+  - Possui validação básica e menu estatístico (média, maior, menor)
+  - Notas não inseridas ficam marcadas como -1.0
+*/
+
+/* calcula média ignorando valores -1.0 (ou seja, bimestres não inseridos) */
+float calcular_media(float notas[], int n) {
+    float soma = 0.0f;
+    int conta = 0;
+    for (int i = 0; i < n; i++) {
+        if (notas[i] >= 0.0f) { // nota válida
+            soma += notas[i];
+            conta++;
+        }
+    }
+    if (conta == 0) return -1.0f; // sinaliza que não há notas
+    return soma / conta;
+}
+
+/* retorna maior nota entre as válidas; se não houver, retorna -1.0 */
+float maior_nota(float notas[], int n) {
+    float maior = -1.0f;
+    for (int i = 0; i < n; i++) {
+        if (notas[i] >= 0.0f && (maior < 0.0f || notas[i] > maior)) {
+            maior = notas[i];
+        }
+    }
+    return maior;
+}
+
+/* retorna menor nota entre as válidas; se não houver, retorna -1.0 */
+float menor_nota(float notas[], int n) {
+    float menor = -1.0f;
+    for (int i = 0; i < n; i++) {
+        if (notas[i] >= 0.0f && (menor < 0.0f || notas[i] < menor)) {
+            menor = notas[i];
+        }
+    }
+    return menor;
+}
+
+/* função pequena para limpar o buffer caso o usuário digite lixo (não necessária em todos os sistemas,
+   mas ajuda em entradas repetidas). */
+void limpar_buffer_nova_linha(void) {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) { }
+}
+
+int main(void) {
+    /* arrays para cada disciplina - inicializados com -1.0 (não inserido) */
+    float algoritmos[BIMESTRES], design[BIMESTRES], modelagem[BIMESTRES], frontend[BIMESTRES];
+    for (int i = 0; i < BIMESTRES; i++) {
+        algoritmos[i] = design[i] = modelagem[i] = frontend[i] = -1.0f;
+    }
+
+    printf("=== Projeto Final: Gerenciador de Notas ===\n\n");
+    printf("Este programa permite cadastrar notas (0.0 - 10.0) por bimestre\n");
+    printf("para as disciplinas:\n");
+    printf("1) Algoritmos e Pensamentos Computacionais\n");
+    printf("2) Design Profissional\n");
+    printf("3) Modelagem de Banco de Dados\n");
+    printf("4) Desenvolvimento Front-End para Web\n\n");
+
+    for (int b = 0; b < BIMESTRES; b++) {
+        char resposta;
+        printf("Deseja inserir notas do %dº bimestre? (s/n): ", b + 1);
+        if (scanf(" %c", &resposta) != 1) {
+            printf("Entrada inválida. Pulando este bimestre.\n");
+            limpar_buffer_nova_linha();
+            continue;
+        }
+        limpar_buffer_nova_linha();
+
+        if (resposta == 's' || resposta == 'S') {
+            float nota;
+
+            /* Algoritmos */
+            printf("  Algoritmos: ");
+            if (scanf("%f", &nota) != 1) {
+                printf("   Entrada inválida — nota não registrada.\n");
+                limpar_buffer_nova_linha();
+                algoritmos[b] = -1.0f;
+            } else {
+                limpar_buffer_nova_linha();
+                if (nota < 0.0f || nota > 10.0f) {
+                    printf("   Nota fora do intervalo. Não registrada.\n");
+                    algoritmos[b] = -1.0f;
+                } else algoritmos[b] = nota;
+            }
+
+            /* Design */
+            printf("  Design: ");
+            if (scanf("%f", &nota) != 1) {
+                printf("   Entrada inválida — nota não registrada.\n");
+                limpar_buffer_nova_linha();
+                design[b] = -1.0f;
+            } else {
+                limpar_buffer_nova_linha();
+                if (nota < 0.0f || nota > 10.0f) {
+                    printf("   Nota fora do intervalo. Não registrada.\n");
+                    design[b] = -1.0f;
+                } else design[b] = nota;
+            }
+
+            /* Modelagem */
+            printf("  Modelagem de BD: ");
+            if (scanf("%f", &nota) != 1) {
+                printf("   Entrada inválida — nota não registrada.\n");
+                limpar_buffer_nova_linha();
+                modelagem[b] = -1.0f;
+            } else {
+                limpar_buffer_nova_linha();
+                if (nota < 0.0f || nota > 10.0f) {
+                    printf("   Nota fora do intervalo. Não registrada.\n");
+                    modelagem[b] = -1.0f;
+                } else modelagem[b] = nota;
+            }
+
+            /* Front-End */
+            printf("  Front-End: ");
+            if (scanf("%f", &nota) != 1) {
+                printf("   Entrada inválida — nota não registrada.\n");
+                limpar_buffer_nova_linha();
+                frontend[b] = -1.0f;
+            } else {
+                limpar_buffer_nova_linha();
+                if (nota < 0.0f || nota > 10.0f) {
+                    printf("   Nota fora do intervalo. Não registrada.\n");
+                    frontend[b] = -1.0f;
+                } else frontend[b] = nota;
+            }
+
+            printf("\n"); /* separação visual entre bimestres */
+        } else {
+            printf("Pulando %dº bimestre.\n\n", b + 1);
+            /* já estão -1.0 por padrão, então só continua */
+        }
+    }
+
+    /* Exibe todas as notas armazenadas (ou "não inserida") */
+    printf("\n=== Notas Armazenadas ===\n");
+    for (int b = 0; b < BIMESTRES; b++) {
+        printf("%dº bimestre:\n", b + 1);
+        if (algoritmos[b] >= 0.0f) printf("  Algoritmos: %.2f\n", algoritmos[b]); else printf("  Algoritmos: (não inserida)\n");
+        if (design[b] >= 0.0f) printf("  Design: %.2f\n", design[b]); else printf("  Design: (não inserida)\n");
+        if (modelagem[b] >= 0.0f) printf("  Modelagem BD: %.2f\n", modelagem[b]); else printf("  Modelagem BD: (não inserida)\n");
+        if (frontend[b] >= 0.0f) printf("  Front-End: %.2f\n", frontend[b]); else printf("  Front-End: (não inserida)\n");
+        printf("\n");
+    }
+
+    /* Menu estatístico */
+    int opcao = -1;
+    while (opcao != 0) {
+        printf("=== Menu Estatístico ===\n");
+        printf("1 - Média de uma disciplina\n");
+        printf("2 - Maior nota de uma disciplina\n");
+        printf("3 - Menor nota de uma disciplina\n");
+        printf("0 - Sair\n");
+        printf("Escolha uma opção: ");
+        if (scanf("%d", &opcao) != 1) {
+            printf("Entrada inválida. Saindo do menu.\n");
+            limpar_buffer_nova_linha();
+            break;
+        }
+
+        if (opcao == 0) break;
+
+        int disc = 0;
+        printf("Escolha a disciplina:\n");
+        printf("  1 - Algoritmos\n  2 - Design\n  3 - Modelagem BD\n  4 - Front-End\n");
+        printf("Disciplina: ");
+        if (scanf("%d", &disc) != 1) {
+            printf("Entrada inválida. Voltando ao menu.\n");
+            limpar_buffer_nova_linha();
+            continue;
+        }
+
+        float resultado;
+        switch (opcao) {
+            case 1: /* média */
+                if (disc == 1) resultado = calcular_media(algoritmos, BIMESTRES);
+                else if (disc == 2) resultado = calcular_media(design, BIMESTRES);
+                else if (disc == 3) resultado = calcular_media(modelagem, BIMESTRES);
+                else if (disc == 4) resultado = calcular_media(frontend, BIMESTRES);
+                else { printf("Disciplina inválida.\n"); continue; }
+
+                if (resultado < 0.0f) printf("Nenhuma nota registrada para essa disciplina.\n");
+                else printf("Média: %.2f\n", resultado);
+                break;
+
+            case 2: /* maior */
+                if (disc == 1) resultado = maior_nota(algoritmos, BIMESTRES);
+                else if (disc == 2) resultado = maior_nota(design, BIMESTRES);
+                else if (disc == 3) resultado = maior_nota(modelagem, BIMESTRES);
+                else if (disc == 4) resultado = maior_nota(frontend, BIMESTRES);
+                else { printf("Disciplina inválida.\n"); continue; }
+
+                if (resultado < 0.0f) printf("Nenhuma nota registrada para essa disciplina.\n");
+                else printf("Maior nota: %.2f\n", resultado);
+                break;
+
+            case 3: /* menor */
+                if (disc == 1) resultado = menor_nota(algoritmos, BIMESTRES);
+                else if (disc == 2) resultado = menor_nota(design, BIMESTRES);
+                else if (disc == 3) resultado = menor_nota(modelagem, BIMESTRES);
+                else if (disc == 4) resultado = menor_nota(frontend, BIMESTRES);
+                else { printf("Disciplina inválida.\n"); continue; }
+
+                if (resultado < 0.0f) printf("Nenhuma nota registrada para essa disciplina.\n");
+                else printf("Menor nota: %.2f\n", resultado);
+                break;
+
+            default:
+                printf("Opção inválida. Tente novamente.\n");
+        }
+
+        printf("\n"); /* separa iterações do menu */
+    }
+
+    printf("Programa encerrado. Bom estudo!\n");
+    return 0;
+}
